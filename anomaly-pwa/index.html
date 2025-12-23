@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>产线异常提报</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#007bff" />
+</head>
+<body>
+  <div id="app">
+    <!-- 路由容器 -->
+    <div id="home" class="page active">
+      <h1>产线异常提报</h1>
+      <button id="scanBtn">扫描工站二维码</button>
+      <button id="gotoQrGen">生成工站二维码</button>
+      <button id="gotoMqttConfig">MQTT 配置</button>
+    </div>
+
+    <div id="form" class="page">
+      <h2>异常提报</h2>
+      <p><strong>产品：</strong><span id="product"></span></p>
+      <p><strong>线别：</strong><span id="line"></span></p>
+      <p><strong>工站：</strong><span id="station"></span></p>
+      
+      <label>异常类别：</label>
+      <div id="categoryGroup"></div>
+
+      <label>异常说明：</label>
+      <textarea id="description" placeholder="请描述异常现象…"></textarea>
+
+      <button id="submitBtn">提交</button>
+      <button id="backFromForm">返回首页</button>
+    </div>
+
+    <div id="qrcode-gen" class="page">
+      <h2>生成工站二维码</h2>
+      <input type="text" id="qrProduct" placeholder="产品" />
+      <input type="text" id="qrLine" placeholder="线别" />
+      <input type="text" id="qrStation" placeholder="工站" />
+      <button id="generateQrBtn">生成二维码</button>
+      <div id="qrcodeContainer"></div>
+      <a id="downloadQrLink" style="display:none;">下载 PNG</a>
+      <button id="backFromQr">返回首页</button>
+    </div>
+
+    <div id="mqtt-config" class="page">
+      <h2>MQTT 配置</h2>
+      <input type="text" id="domain" placeholder="目标域名（如 mqtt.example.com）" />
+      <input type="text" id="port" placeholder="端口（如 8083）" value="8083" />
+      <input type="text" id="username" placeholder="用户名" />
+      <input type="password" id="password" placeholder="密码" />
+      <input type="text" id="clientId" placeholder="clientId（建议唯一）" value="anomaly_client_1" />
+      <input type="text" id="topic" placeholder="上报 Topic（如 anomaly/report）" />
+
+      <button id="testMqttBtn">联通测试</button>
+      <div id="mqttResult"></div>
+      <button id="backFromConfig">返回首页</button>
+    </div>
+
+    <div id="loading" style="display:none;">提交中...</div>
+  </div>
+
+  <!-- 第三方库（使用国内 CDN 加速） -->
+  <script src="https://cdn.staticfile.org/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+  <script src="https://cdn.staticfile.org/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.staticfile.org/paho-mqtt/1.1.0/paho-mqtt-min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
